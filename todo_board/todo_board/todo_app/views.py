@@ -66,9 +66,12 @@ class TaskListView(ListView):
             lists_and_tasks.append((list_item, tasks))
 
         context['lists_and_tasks'] = lists_and_tasks
-        # context['lists_and_tasks'] = context['lists_and_tasks'].filter(user=self.request.user)
-        return context
         
+        # search_input = self.request.GET.get('search-area') or ''
+        # if search_input:
+        #     context['lists_and_tasks'] = context['lists_and_tasks'].filter(title__icontains=search_input)
+        return context
+
 class TaskDetail(DetailView):
     context_object_name = 'task'
     model = Task
@@ -106,3 +109,7 @@ class TaskDelete(DeleteView):
     context_object_name = 'task'
     template_name = 'task_confirm_delete.html'
     success_url = reverse_lazy('tasklistview')
+
+# def completedtasks(request):
+#     task = Task.objects.filter(completed__isnull=False).order_by('-completed')
+#     return render(request, 'completed_task.html',{'tasks':task})
